@@ -36,6 +36,7 @@ This project is a pre-alpha prototype of an app with which regular citizens coul
 6. Spend a maximum of 10 minutes on this question: how would you design a captcha for this form?
 - I would use google reCaptcha, because it seems very easy to use. Adding a script tag in the head and a div with the captcha in the place it should be.
 - The server side to validate the captcha seems more complicated, but [in this video there are instructions](https://www.youtube.com/watch?v=UzCkSzmEq8E).
+- I am not going to do here because of the convoluted billing system from google.
 7. **BONUS** Get all notifications from the backend and somehow show them in the fronted
 8. **SUPER BONUS** Implement a captcha for this form without using any extra npm dependencies
 9. **XTRA BONUS** Make the frontend look 𝓖𝓸𝓸𝓭
