@@ -10,6 +10,7 @@ import Map from './Map.jsx'
 export default function App() {
   const [position, setPosition] = useState(null);
   const [desc, setDesc] = useState(null);
+  const [reports, setReports] = useState(null);
 
   // Configure leaflet Marker icon - without this it is broken 💩
   // Wow this kind of sucks and was super hard to find!
@@ -17,9 +18,29 @@ export default function App() {
   L.Marker.prototype.options.icon = DefaultIcon;
 
   console.log("BACKEND RUNNING AT " + process.env.REACT_APP_BACKEND);
+
+  function findReports() {
+    // Find previous abandoned bicycle reports from the backend
+    fetch(`${process.env.REACT_APP_BACKEND}notifications`)
+      .then(res => res.json())
+      .then(data => setReports(data))
+      .catch(err => console.warn(err));
+  }
+
   function report() {
-    // TODO: Send abandoned bicycle report to the backend
-    alert("TBD");
+    // Send abandoned bicycle report to the backend
+    fetch(`${process.env.REACT_APP_BACKEND}notifications`, { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "position": position,
+            "description": desc
+        })
+    })
+        .then(res => res.json())
+        .catch(err => console.warn(err));
   }
 
   return (
@@ -34,6 +55,18 @@ export default function App() {
           placeholder="Write short description here"
         >{desc}</textarea>
         <button onClick={report}>Send report</button>
+
+        <div id="previousReports">
+          <button onClick={findReports}>View previous reports:</button>
+          {reports ?
+          <ul>
+            {reports.map(report => <li>
+              <div>{report.description}</div>
+              <div>lat:{report.position.lat.toFixed(5)} lng:{report.position.lng.toFixed(5)}</div>
+            </li>)}
+          </ul> :
+          <></>}
+        </div>
       </div>
     </div>
   );
