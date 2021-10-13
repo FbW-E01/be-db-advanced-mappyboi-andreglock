@@ -32,7 +32,6 @@ app.get("/notifications", async (req, res) => {
 });
 
 app.post("/notifications", async (req, res) => {
-  console.log("Received", req.body);
   // Somehow save data to DB
   try {
     // Connect to MongoDB using Mongoose
